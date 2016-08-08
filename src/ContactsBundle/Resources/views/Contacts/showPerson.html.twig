@@ -1,0 +1,79 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<form action="{{path('contacts_contacts_showall')}}">
+<input type="submit" value="Show all" />
+</form><br>  
+    
+{# Dane osobowe #}
+    Name: {{person.name}}<br>
+    Surname: {{person.surname}}<br>
+    Description: {{person.description}}<br>
+    <form action="{{path('contacts_contacts_editperson', {'id': person.id}) }}">
+    <input type="submit" value="Edit person data" />
+    </form><br>
+{#    <a href="{{path('contacts_contacts_editperson', {'id': person.id}) }}">Edit person data</a>#}
+
+{# Adres #}
+Address:<br>
+{% for address in person.addresses %}
+    Street: {{address.street}} {{address.strNumber}}
+    {% if address.houseNumber is defined and address.houseNumber is not null%}
+        /{{address.houseNumber}}         
+    {%endif%}
+    <br>City/Town: {{address.city}}<br>
+    <form action="{{path('contacts_contacts_editaddress', {'id': person.id, 'addressId':address.id}) }}">
+    <input type="submit" value="Edit adresses" />
+    </form>
+    <form action="{{path('contacts_contacts_deleteaddress', {'id': person.id, 'addressId':address.id})}}">
+    <input type="submit" value="Delete adresses" />
+    </form><br>
+    {#    <a href="{{path('contacts_contacts_editaddress', {'id': person.id, 'addressId':address.id}) }}">Edit addresses</a>#}
+{% else %}
+    <form action="{{path('contacts_contacts_addaddress', {'id': person.id})}}">
+    <input type="submit" value="Add addresses" />
+    </form>
+{% endfor %}
+
+{# Email #}
+Emails:<br>
+{% for email in person.emails %}
+    Main email: {{email.mainEmail}}<br>
+    Work email: {{email.workEmail}}<br>
+    Second email: {{email.secondEmail}}<br>
+    <form action="{{path('contacts_contacts_editemail', {'id': person.id, 'emailId':email.id})}}">
+    <input type="submit" value="Edit emails" />
+    </form>
+    <form action="{{path('contacts_contacts_deleteemail', {'id': person.id, 'emailId':email.id})}}">
+    <input type="submit" value="Delete emails" />
+    </form><br>
+        {#    <a href="{{path('contacts_contacts_editemail', {'id': person.id, 'emailId':email.id}) }}">Edit emails</a>#}
+{% else %}
+    <form action="{{path('contacts_contacts_addemial', {'id': person.id})}}">
+    <input type="submit" value="Add emails" />
+    </form>
+
+{% endfor %}
+
+{# Phone #}
+Phone numbers:<br>
+{% for phone in person.phones %}
+    Home: {{phone.home}}<br>
+    Mobile: {{phone.mobile}}<br>
+    Work: {{phone.work}}<br>
+    <form action="{{path('contacts_contacts_editphone', {'id': person.id, 'phoneId':phone.id})}}">
+    <input type="submit" value="Edit phone numbers" />
+    </form>
+    <form action="{{path('contacts_contacts_deletephone', {'id': person.id, 'phoneId':phone.id})}}">
+    <input type="submit" value="Delete phone numbers" />
+    </form><br>
+    {#    <a href="{{path('contacts_contacts_editphone', {'id': person.id, 'phoneId':phone.id}) }}">Edit phone numbers</a>#}
+{% else %}
+    <form action="{{path('contacts_contacts_addphone', {'id': person.id})}}">
+    <input type="submit" value="Add phone numbers" />
+    </form>
+{% endfor %}  
+<a href="{{path('contacts_contacts_deleteperson', {'id': person.id}) }}" style="text-decoration: none"><span style="color:red;">DELETE PERSON</span></a>
+
+<br>  
+{% endblock %}

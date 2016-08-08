@@ -1,0 +1,13 @@
+{% extends "::showAll.html.twig" %}
+
+{% block body %}
+<form action="{{path('contacts_contacts_showall')}}">
+<input type="submit" value="Show all" />
+</form><br>
+    
+{% for person in allPersons %}
+{{parent()}}
+{% else %}
+    Nothig matches
+{% endfor %}
+{% endblock %}

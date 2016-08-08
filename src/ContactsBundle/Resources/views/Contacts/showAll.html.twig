@@ -1,0 +1,70 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<form action="{{path('contacts_contacts_newperson')}}">
+<input type="submit" value="Add" />
+</form><br>
+<form action="{{path('contacts_contacts_findpersonbyname')}}">
+<input type="submit" value="Find user by name" />
+</form><br>
+{# Dane osobowe #}
+{%for person in allPersons%}
+    <h2>{{ person.name|first }}</h2>
+    Name: {{person.name}}<br>
+    Surname: {{person.surname}}<br>
+    Description: {{person.description}}<br>
+{# Adres #}
+
+{% for address in person.addresses %}
+    Street: {{address.street}} {{address.strNumber}}
+    {% if address.houseNumber is defined and address.houseNumber is not null%}
+        /{{address.houseNumber}} <br>
+    {%else%}         
+    {%endif%}
+    City/Town: {{ address.city }}<br>
+{% endfor %}
+
+{# Email #}
+
+{% for email in person.emails %}
+    {% if email.mainEmail is defined and email.mainEmail is not null%}
+        Main email: {{email.mainEmail}}<br>
+    {% else %}
+    {% endif %}
+    {% if email.workEmail is defined and email.workEmail is not null%}
+        Work email: {{email.workEmail}}<br>
+    {% else %}
+    {% endif %}
+    {% if email.secondEmail is defined and email.secondEmail is not null%}
+        Second email: {{email.secondEmail}}<br>
+    {% else %}
+    {% endif %}
+{% endfor %}
+
+{# Phone #}
+
+{% for phone in person.phones %}
+    {% if phone.home is defined and phone.home is not null%}
+        Home: {{phone.home}}<br>
+    {% else %}
+    {% endif %}
+    {% if phone.mobile is defined and phone.mobile is not null%}
+        Mobile: {{phone.mobile}}<br>
+    {% else %}
+    {% endif %}
+    {% if phone.work is defined and phone.work is not null%}
+        Work: {{phone.work}}<br>
+    {% else %}
+    {% endif %}
+{% endfor %}  
+    <form action="{{path('contacts_contacts_showperson', {'id': person.id}) }}">
+    <input type="submit" value="Edit" />
+    </form><br>
+{%  endfor %}
+
+{#{% for letter in range('AA','ZZ') %}
+{{ letter }},
+{% endfor %}#}
+
+
+{% endblock %}
