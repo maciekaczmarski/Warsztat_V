@@ -1,4 +1,5 @@
-Warsztat_5
+Książka adresowa (contactbook)
 ==========
 
-A Symfony project created on August 5, 2016, 10:33 am.
+Aplikacja napisana w Symfony 2, oparta o wzorzec projektowy MVC. 
+Daje możliwość tworzenia, edytowania i usuwania kontaktów.
